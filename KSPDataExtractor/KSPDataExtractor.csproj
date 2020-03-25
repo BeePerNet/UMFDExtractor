@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Remove="Assets\hsicomp.bmp" />
+    <AvaloniaResource Remove="Views\EHSIView.xaml" />
+    <AvaloniaResource Remove="Views\EHSIWindow.xaml" />
+    <AvaloniaResource Remove="Views\ValuesWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\hsicomp.bmp" />
+    <None Remove="Views\EHSIView.xaml" />
+    <None Remove="Views\EHSIWindow.xaml" />
+    <None Remove="Views\ValuesWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\hsicomp.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.4" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.4" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.4" />
+    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
+    <PackageReference Include="KRPC.Client" Version="0.4.8" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ValuesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EHSIWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EHSIView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\EHSIWindow.xaml.cs">
+      <DependentUpon>EHSIWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

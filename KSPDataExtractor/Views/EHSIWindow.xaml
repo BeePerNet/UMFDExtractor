@@ -1,0 +1,102 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:KSPDataExtractor.ViewModels;assembly=KSPDataExtractor"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:v="clr-namespace:KSPDataExtractor.Views;assembly=KSPDataExtractor"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        ShowInTaskbar="False"
+        Closed="Close"
+        x:Class="KSPDataExtractor.Views.EHSIWindow"
+        Title="EHSIWindow">
+  <Design.DataContext>
+    <vm:EHSIWindowViewModel/>
+  </Design.DataContext>
+  <StackPanel>
+    <v:EHSIView DataContext="{Binding EHSI}" />
+    <ComboBox MinHeight="20"
+              Items="{Binding Client.Waypoints}"
+              SelectedItem="{Binding Client.Waypoint}">
+      <ComboBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+      </ComboBox.ItemTemplate>
+    </ComboBox>
+    <Grid ColumnDefinitions="auto,auto"
+          HorizontalAlignment="Stretch"
+          Margin="2"
+          RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto">
+      <Grid.Styles>
+        <Style Selector="TextBlock">
+          <Setter Property="HorizontalAlignment"
+                  Value="Right" />
+        </Style>
+      </Grid.Styles>
+
+      <TextBlock Grid.Row="0"
+                 Grid.Column="0"
+                 Text="BodyRadius: " />
+      <TextBlock Grid.Row="0"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.BodyRadius, StringFormat=\{0:#\,0.00\} m}" />
+
+      <TextBlock Grid.Row="1"
+                 Grid.Column="0"
+                 Text="Latitude: " />
+      <TextBlock Grid.Row="1"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.WaypointLatitude, StringFormat=\{0:#\,0.00\} °}" />
+
+      <TextBlock Grid.Row="2"
+                 Grid.Column="0"
+                 Text="Longitude: " />
+      <TextBlock Grid.Row="2"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.WaypointLongitude, StringFormat=\{0:#\,0.00\} °}" />
+
+      <TextBlock Grid.Row="4"
+                 Grid.Column="0"
+                 Text="Distance: " />
+      <TextBlock Grid.Row="4"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.Distance, StringFormat=\{0:#\,0.00\} m}" />
+
+      <TextBlock Grid.Row="5"
+                 Grid.Column="0"
+                 Text="Bearing: " />
+      <TextBlock Grid.Row="5"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.Bearing, StringFormat=\{0:#\,0.00\} °}" />
+
+      <TextBlock Grid.Row="6"
+                 Grid.Column="0"
+                 Text="Heading: " />
+      <TextBlock Grid.Row="6"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.Heading, StringFormat=\{0:#\,0.00\} °}" />
+
+      <TextBlock Grid.Row="7"
+                 Grid.Column="0"
+                 Text="Course: " />
+      <TextBlock Grid.Row="7"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.Course, StringFormat=\{0:#\,0.00\} °}" />
+
+      <TextBlock Grid.Row="8"
+                 Grid.Column="0"
+                 Text="Course deviation: " />
+      <TextBlock Grid.Row="8"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.CourseDeviation, StringFormat=\{0:#\,0.00\} m}" />
+
+      <TextBlock Grid.Row="9"
+                 Grid.Column="0"
+                 Text="CourseDeviationLog: " />
+      <TextBlock Grid.Row="9"
+                 Grid.Column="1"
+                 Text="{Binding EHSI.CourseDeviationLog, StringFormat=\{0:#\,0.00\}}" />
+    </Grid>
+  </StackPanel>
+</Window>

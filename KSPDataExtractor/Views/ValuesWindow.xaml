@@ -1,0 +1,385 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:KSPDataExtractor.ViewModels;assembly=KSPDataExtractor"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:conv="clr-namespace:KSPDataExtractor.Converters;assembly=KSPDataExtractor"
+        xmlns:ctrl="clr-namespace:KSPDataExtractor.Controls;assembly=KSPDataExtractor"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        Closed="Close"
+        SizeToContent="WidthAndHeight"
+        x:Class="KSPDataExtractor.Views.ValuesWindow"
+        Title="ValuesWindow">
+  <Window.Resources>
+    <conv:InverseConverter x:Key="InverseConverter" />
+    <conv:TimeSpanConverter x:Key="TimeSpanConverter" />
+    <conv:DividerConverter x:Key="DividerConverter" />
+    <conv:DistanceConverter x:Key="DistanceConverter" />
+  </Window.Resources>
+  <Window.Styles>
+      <Style Selector="TextBlock">
+        <Setter Property="HorizontalAlignment"
+                Value="Right" />
+      </Style>
+  </Window.Styles>
+  <Design.DataContext>
+    <vm:ValuesWindowViewModel/>
+  </Design.DataContext>
+  <Grid Margin="2"
+        VerticalAlignment="Top"
+        RowDefinitions="auto,auto,*,auto"
+        DataContext="{Binding Values}">
+    <StackPanel Grid.Row="2"
+                Orientation="Horizontal">
+      <Grid Grid.Row="1"
+            Margin="2"
+            VerticalAlignment="Top"
+            ColumnDefinitions="auto,auto"
+            RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto"
+            DataContext="{Binding Orbit}">
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Eccentricity: " />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   Text="{Binding Eccentricity, StringFormat=\{0:#\,0.00\}}" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Epoch: " />
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   Text="{Binding Epoch, StringFormat=\{0:#\,0.00\}}" />
+
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Text="Inclination: " />
+        <TextBlock Grid.Row="2"
+                   Grid.Column="1"
+                   Text="{Binding Inclination, StringFormat=\{0:#\,0.00\} rad}" />
+
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   Text="LongitudeOfAscendingNode: " />
+        <TextBlock Grid.Row="3"
+                   Grid.Column="1"
+                   Text="{Binding LongitudeOfAscendingNode, StringFormat=\{0:#\,0.00\} rad}" />
+
+        <TextBlock Grid.Row="4"
+                   Grid.Column="0"
+                   Text="MeanAnomaly: " />
+        <TextBlock Grid.Row="4"
+                   Grid.Column="1"
+                   Text="{Binding MeanAnomaly, StringFormat=\{0:#\,0.00\}}" />
+
+        <TextBlock Grid.Row="5"
+                   Grid.Column="0"
+                   Text="MeanAnomalyAtEpoch: " />
+        <TextBlock Grid.Row="5"
+                   Grid.Column="1"
+                   Text="{Binding MeanAnomalyAtEpoch, StringFormat=\{0:#\,0.00\}}" />
+
+        <TextBlock Grid.Row="6"
+                   Grid.Column="0"
+                   Text="OrbitalSpeed: " />
+        <TextBlock Grid.Row="6"
+                   Grid.Column="1"
+                   Text="{Binding OrbitalSpeed, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="7"
+                   Grid.Column="0"
+                   Text="Periapsis: " />
+        <TextBlock Grid.Row="7"
+                   Grid.Column="1"
+                   Text="{Binding Periapsis, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="8"
+                   Grid.Column="0"
+                   Text="PeriapsisAltitude: " />
+        <TextBlock Grid.Row="8"
+                   Grid.Column="1"
+                   Text="{Binding PeriapsisAltitude, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="9"
+                   Grid.Column="0"
+                   Text="Period: " />
+        <TextBlock Grid.Row="9"
+                   Grid.Column="1"
+                   Text="{Binding Period, Converter={StaticResource TimeSpanConverter}}" />
+
+        <TextBlock Grid.Row="10"
+                   Grid.Column="0"
+                   Text="Radius: " />
+        <TextBlock Grid.Row="10"
+                   Grid.Column="1"
+                   Text="{Binding Radius, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="11"
+                   Grid.Column="0"
+                   Text="SemiMajorAxis: " />
+        <TextBlock Grid.Row="11"
+                   Grid.Column="1"
+                   Text="{Binding SemiMajorAxis, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="12"
+                   Grid.Column="0"
+                   Text="SemiMinorAxis: " />
+        <TextBlock Grid.Row="12"
+                   Grid.Column="1"
+                   Text="{Binding SemiMinorAxis, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="13"
+                   Grid.Column="0"
+                   Text="Speed: " />
+        <TextBlock Grid.Row="13"
+                   Grid.Column="1"
+                   Text="{Binding Speed, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="14"
+                   Grid.Column="0"
+                   Text="TimeToApoapsis: " />
+        <TextBlock Grid.Row="14"
+                   Grid.Column="1"
+                   Text="{Binding TimeToApoapsis, Converter={StaticResource TimeSpanConverter}}" />
+
+        <TextBlock Grid.Row="15"
+                   Grid.Column="0"
+                   Text="TimeToPeriapsis: " />
+        <TextBlock Grid.Row="15"
+                   Grid.Column="1"
+                   Text="{Binding TimeToPeriapsis, Converter={StaticResource TimeSpanConverter}}" />
+
+        <TextBlock Grid.Row="16"
+                   Grid.Column="0"
+                   Text="EccentricAnomaly: " />
+        <TextBlock Grid.Row="16"
+                   Grid.Column="1"
+                   Text="{Binding EccentricAnomaly, StringFormat=\{0:#\,0.00\}}" />
+
+        <TextBlock Grid.Row="17"
+                   Grid.Column="0"
+                   Text="ArgumentOfPeriapsis: " />
+        <TextBlock Grid.Row="17"
+                   Grid.Column="1"
+                   Text="{Binding ArgumentOfPeriapsis, StringFormat=\{0:#\,0.00\} rad}" />
+
+        <TextBlock Grid.Row="18"
+                   Grid.Column="0"
+                   Text="ApoapsisAltitude: " />
+        <TextBlock Grid.Row="18"
+                   Grid.Column="1"
+                   Text="{Binding ApoapsisAltitude, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="19"
+                   Grid.Column="0"
+                   Text="TimeToSOIChange: " />
+        <TextBlock Grid.Row="19"
+                   Grid.Column="1"
+                   Text="{Binding TimeToSOIChange, Converter={StaticResource TimeSpanConverter}}" />
+
+        <TextBlock Grid.Row="20"
+                   Grid.Column="0"
+                   Text="TrueAnomaly: " />
+        <TextBlock Grid.Row="20"
+                   Grid.Column="1"
+                   Text="{Binding TrueAnomaly, StringFormat=\{0:#\,0.00\}}" />
+
+        <TextBlock Grid.Row="21"
+                   Grid.Column="0"
+                   Text="Apoapsis: " />
+        <TextBlock Grid.Row="21"
+                   Grid.Column="1"
+                   Text="{Binding Apoapsis, StringFormat=\{0:#\,0.00\} m}" />
+      </Grid>
+      <Grid ColumnDefinitions="auto,auto"
+            VerticalAlignment="Top"
+            Margin="2"
+            RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto"
+            DataContext="{Binding SurfaceFlight}">
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Pitch: " />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   Text="{Binding Pitch, StringFormat=\{0:0.00\} °}" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Roll: " />
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   Text="{Binding Roll, StringFormat=\{0:0.00\} °}" />
+
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Text="SideslipAngle: " />
+        <TextBlock Grid.Row="2"
+                   Grid.Column="1"
+                   Text="{Binding SideslipAngle, StringFormat=\{0:0.00\} °}" />
+
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   Text="MeanAltitude: " />
+        <TextBlock Grid.Row="3"
+                   Grid.Column="1"
+                   Text="{Binding MeanAltitude, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="4"
+                   Grid.Column="0"
+                   Text="Speed: " />
+        <TextBlock Grid.Row="4"
+                   Grid.Column="1"
+                   Text="{Binding Speed, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="5"
+                   Grid.Column="0"
+                   Text="StaticAirTemperature: " />
+        <TextBlock Grid.Row="5"
+                   Grid.Column="1"
+                   Text="{Binding StaticAirTemperature, StringFormat=\{0:#\,0.00\} K}" />
+
+        <TextBlock Grid.Row="6"
+                   Grid.Column="0"
+                   Text="StaticPressure: " />
+        <TextBlock Grid.Row="6"
+                   Grid.Column="1"
+                   Text="{Binding StaticPressure, StringFormat=\{0:#\,0.00\} Pa}" />
+
+        <TextBlock Grid.Row="7"
+                   Grid.Column="0"
+                   Text="StaticPressureAtMSL: " />
+        <TextBlock Grid.Row="7"
+                   Grid.Column="1"
+                   Text="{Binding StaticPressureAtMSL, StringFormat=\{0:#\,0.00\} Pa}" />
+
+        <TextBlock Grid.Row="8"
+                   Grid.Column="0"
+                   Text="SurfaceAltitude: " />
+        <TextBlock Grid.Row="8"
+                   Grid.Column="1"
+                   Text="{Binding SurfaceAltitude, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="9"
+                   Grid.Column="0"
+                   Text="TerminalVelocity: " />
+        <TextBlock Grid.Row="9"
+                   Grid.Column="1"
+                   Text="{Binding TerminalVelocity, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="10"
+                   Grid.Column="0"
+                   Text="TotalAirTemperature: " />
+        <TextBlock Grid.Row="10"
+                   Grid.Column="1"
+                   Text="{Binding TotalAirTemperature, StringFormat=\{0:#\,0.00\} K}" />
+
+        <TextBlock Grid.Row="11"
+                   Grid.Column="0"
+                   Text="TrueAirSpeed: " />
+        <TextBlock Grid.Row="11"
+                   Grid.Column="1"
+                   Text="{Binding TrueAirSpeed, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="12"
+                   Grid.Column="0"
+                   Text="SpeedOfSound: " />
+        <TextBlock Grid.Row="12"
+                   Grid.Column="1"
+                   Text="{Binding SpeedOfSound, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="13"
+                   Grid.Column="0"
+                   Text="Mach: " />
+        <TextBlock Grid.Row="13"
+                   Grid.Column="1"
+                   Text="{Binding Mach, StringFormat=\{0:#\,0.00\} M}" />
+
+        <TextBlock Grid.Row="14"
+                   Grid.Column="0"
+                   Text="AngleOfAttack: " />
+        <TextBlock Grid.Row="14"
+                   Grid.Column="1"
+                   Text="{Binding AngleOfAttack, StringFormat=\{0:0.00\} °}" />
+
+        <TextBlock Grid.Row="15"
+                   Grid.Column="0"
+                   Text="AtmosphereDensity: " />
+        <TextBlock Grid.Row="15"
+                   Grid.Column="1"
+                   Text="{Binding AtmosphereDensity, StringFormat=\{0:#\,0.00\} kg/m^3}" />
+
+        <TextBlock Grid.Row="16"
+                   Grid.Column="0"
+                   Text="BedrockAltitude: " />
+        <TextBlock Grid.Row="16"
+                   Grid.Column="1"
+                   Text="{Binding BedrockAltitude, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="18"
+                   Grid.Column="0"
+                   Text="DynamicPressure (Q): " />
+        <TextBlock Grid.Row="18"
+                   Grid.Column="1"
+                   Text="{Binding DynamicPressure, StringFormat=\{0:#\,0.00\} Pa}" />
+
+        <TextBlock Grid.Row="19"
+                   Grid.Column="0"
+                   Text="Elevation: " />
+        <TextBlock Grid.Row="19"
+                   Grid.Column="1"
+                   Text="{Binding Elevation, StringFormat=\{0:#\,0.00\} m}" />
+
+        <TextBlock Grid.Row="20"
+                   Grid.Column="0"
+                   Text="EquivalentAirSpeed: " />
+        <TextBlock Grid.Row="20"
+                   Grid.Column="1"
+                   Text="{Binding EquivalentAirSpeed, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="21"
+                   Grid.Column="0"
+                   Text="GForce: " />
+        <TextBlock Grid.Row="21"
+                   Grid.Column="1"
+                   Text="{Binding GForce, StringFormat=\{0:#\,0.000\} G}" />
+
+        <TextBlock Grid.Row="22"
+                   Grid.Column="0"
+                   Text="Heading: " />
+        <TextBlock Grid.Row="22"
+                   Grid.Column="1"
+                   Text="{Binding Heading, StringFormat=\{0:#\,0.00\} °}" />
+
+        <TextBlock Grid.Row="23"
+                   Grid.Column="0"
+                   Text="HorizontalSpeed: " />
+        <TextBlock Grid.Row="23"
+                   Grid.Column="1"
+                   Text="{Binding HorizontalSpeed, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="24"
+                   Grid.Column="0"
+                   Text="VerticalSpeed: " />
+        <TextBlock Grid.Row="24"
+                   Grid.Column="1"
+                   Text="{Binding VerticalSpeed, StringFormat=\{0:#\,0.00\} m/s}" />
+
+        <TextBlock Grid.Row="25"
+                   Grid.Column="0"
+                   Text="Latitude: " />
+        <TextBlock Grid.Row="25"
+                   Grid.Column="1"
+                   Text="{Binding Latitude, StringFormat=\{0:#\,0.000 000\} °}" />
+
+        <TextBlock Grid.Row="26"
+                   Grid.Column="0"
+                   Text="Longitude: " />
+        <TextBlock Grid.Row="26"
+                   Grid.Column="1"
+                   Text="{Binding Longitude, StringFormat=\{0:#\,0.000 000\} °}" />
+      </Grid>
+    </StackPanel>
+  </Grid>
+</Window>

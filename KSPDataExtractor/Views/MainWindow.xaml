@@ -1,0 +1,46 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:KSPDataExtractor.ViewModels;assembly=KSPDataExtractor"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:conv="clr-namespace:KSPDataExtractor.Converters;assembly=KSPDataExtractor"
+        xmlns:ctrl="clr-namespace:KSPDataExtractor.Controls;assembly=KSPDataExtractor"
+        mc:Ignorable="d"
+        x:Class="KSPDataExtractor.Views.MainWindow"
+        Closed="Close"
+        SizeToContent="WidthAndHeight"
+        Title="KSPDataExtractor">
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Padding"
+              Value="20" />
+      <Setter Property="Margin"
+              Value="10" />
+      <Setter Property="FontSize"
+              Value="30" />
+    </Style>
+    <Style Selector="CheckBox">
+      <Setter Property="Padding"
+              Value="20" />
+      <Setter Property="Margin"
+              Value="10" />
+      <Setter Property="FontSize"
+              Value="30" />
+    </Style>
+  </Window.Styles>
+  <StackPanel Margin="10">
+    <StackPanel Orientation="Horizontal">
+      <Button Content="Start"
+              Command="{Binding Client.StartCommand}" IsEnabled="{Binding !Client.Running}"/>
+      <Button Content="Stop"
+              Command="{Binding Client.StopCommand}" IsEnabled="{Binding Client.Running}"/>
+      <Button Command="{Binding OpenValuesWindowCommand}">Values</Button>
+      <Button Command="{Binding OpenEHSIWindowCommand}">EHSI</Button>
+    </StackPanel>
+    <CheckBox IsChecked="{Binding Client.Running}" IsEnabled="False">Running</CheckBox>
+    <TextBox Text="{Binding Client.Status}" AcceptsReturn="True" Height="100" IsReadOnly="True" />
+  </StackPanel>
+</Window>

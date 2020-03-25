@@ -1,0 +1,18 @@
+﻿<Window x:Class="UMFDExtractor.PropertiesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:vm="clr-namespace:UMFDExtractor.ViewModels"
+        xmlns:ksp="clr-namespace:UMFDExtractor.Models.KSP"
+        xmlns:local="clr-namespace:UMFDExtractor"
+        mc:Ignorable="d"
+        d:DataContext ="{d:DesignInstance {x:Type vm:MainWindowViewModel}, IsDesignTimeCreatable=True}"
+        Title="PropertiesWindow" Height="450" Width="800">
+    <Grid>
+        <xctk:PropertyGrid SelectedObject="{Binding Client}">
+            
+        </xctk:PropertyGrid>
+    </Grid>
+</Window>
