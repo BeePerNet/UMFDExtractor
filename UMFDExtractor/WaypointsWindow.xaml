@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:UMFDExtractor"
         mc:Ignorable="d"       
         d:DataContext ="{d:DesignInstance {x:Type vm:WaypointsWindowViewModel}, IsDesignTimeCreatable=True}"
-        Title="Waypoints" Height="400" Width="800" WindowStyle="ToolWindow">
+        Title="Waypoints" Height="400" Width="800" WindowStyle="ToolWindow" ResizeMode="CanResizeWithGrip">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

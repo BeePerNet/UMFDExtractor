@@ -11,7 +11,7 @@
         d:DataContext ="{d:DesignInstance {x:Type vm:MainWindowViewModel}, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
                            Closing="ReactiveWindow_Closing"
-        Title="MainWindow" SizeToContent="WidthAndHeight">
+        Title="MainWindow" SizeToContent="WidthAndHeight" ResizeMode="CanResizeWithGrip">
     <StackPanel Margin="10">
         <StackPanel.Resources>
             <conv:VisibilityConverter x:Key="VisibilityConverter" />

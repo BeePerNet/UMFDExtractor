@@ -8,11 +8,9 @@
         xmlns:ksp="clr-namespace:UMFDExtractor.Models.KSP"
         xmlns:local="clr-namespace:UMFDExtractor"
         mc:Ignorable="d"
-        d:DataContext ="{d:DesignInstance {x:Type vm:MainWindowViewModel}, IsDesignTimeCreatable=True}"
-        Title="PropertiesWindow" Height="450" Width="800">
+        d:DataContext ="{d:DesignInstance {x:Type ksp:KSPClient}, IsDesignTimeCreatable=True}"
+        Title="Properties" Height="600" Width="400" ResizeMode="CanResizeWithGrip" WindowStyle="ToolWindow">
     <Grid>
-        <xctk:PropertyGrid SelectedObject="{Binding Client}">
-            
-        </xctk:PropertyGrid>
+        <xctk:PropertyGrid SelectedObject="{Binding}" NameColumnWidth="170"/>
     </Grid>
 </Window>

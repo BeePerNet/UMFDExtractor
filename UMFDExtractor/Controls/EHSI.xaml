@@ -135,14 +135,14 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="68,2,0,0"
-                   Padding="0,2,0,0"
+                   Padding="0,3,0,0"
                    Background="#DDDDDD"
-               Width="25"
+               Width="27"
                Height="23"
                Text="{Binding Distance, Converter={StaticResource DistanceConverter}, ConverterParameter=U}"
                TextAlignment="Center"
                Foreground="Black"
-               FontSize="16"
+               FontSize="14"
                FontWeight="DemiBold" />
         <TextBlock 
                 HorizontalAlignment="Right"
@@ -169,7 +169,7 @@
                Opacity="0.8"
                Margin="2"
                Fill="{StaticResource HatchBrush}"
-               Width="91"
+               Width="93"
                Height="23"
                Visibility="{Binding WorkingWaypoint, Converter={StaticResource VisibilityConverter}, ConverterParameter=not}" />
         <ctrl:RotatingButton

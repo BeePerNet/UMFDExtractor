@@ -25,9 +25,12 @@ namespace UMFDExtractor
         PropertiesWindow propertiesWindow;
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            propertiesWindow = new PropertiesWindow();
-            propertiesWindow.DataContext = this.DataContext;
-            propertiesWindow.Show();
+            if (propertiesWindow == null || !propertiesWindow.IsActive)
+            {
+                propertiesWindow = new PropertiesWindow();
+                propertiesWindow.DataContext = (this.DataContext as MainWindowViewModel).Client;
+                propertiesWindow.Show();
+            }
         }
     }
 }

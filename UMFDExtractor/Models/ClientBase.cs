@@ -44,10 +44,12 @@ namespace UMFDExtractor.Models
 
         [Category("Values")]
         [ExpandableObject]
+        [Browsable(false)]
         public ObservableCollectionExtended<Waypoint> Waypoints { get; } = new ObservableCollectionExtended<Waypoint>();
 
         [Category("Values")]
         [ExpandableObject]
+        [Browsable(false)]
         public ObservableCollectionExtended<Waypoint> FilteredWaypoints { get; } = new ObservableCollectionExtended<Waypoint>();
 
         Waypoint waypoint;
@@ -82,6 +84,7 @@ namespace UMFDExtractor.Models
         {
             Dispose(true);
         }
+
 
     }
 }
