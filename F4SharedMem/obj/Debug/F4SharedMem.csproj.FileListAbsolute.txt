@@ -1,6 +1,0 @@
-P:\Sébastien\GitHub\UMFDExtractor\F4SharedMem\bin\Debug\F4SharedMem.dll
-P:\Sébastien\GitHub\UMFDExtractor\F4SharedMem\bin\Debug\F4SharedMem.pdb
-P:\Sébastien\GitHub\UMFDExtractor\F4SharedMem\obj\Debug\F4SharedMem.csprojAssemblyReference.cache
-P:\Sébastien\GitHub\UMFDExtractor\F4SharedMem\obj\Debug\F4SharedMem.csproj.CoreCompileInputs.cache
-P:\Sébastien\GitHub\UMFDExtractor\F4SharedMem\obj\Debug\F4SharedMem.dll
-P:\Sébastien\GitHub\UMFDExtractor\F4SharedMem\obj\Debug\F4SharedMem.pdb
