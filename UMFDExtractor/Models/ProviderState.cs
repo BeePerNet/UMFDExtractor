@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace UMFDExtractor.Models
 {
-    public interface IValuesProvider
+    public enum ProviderState
     {
-        IObservable<ReactiveObjectBase> Values { get; }
 
-        void StartValues();
-
-        void StopValues();
     }
 }

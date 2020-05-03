@@ -1,7 +1,6 @@
 ﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,22 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UMFDExtractor.ViewModels;
 
-namespace UMFDExtractor
+namespace UMFDExtractor.Windows
 {
     /// <summary>
-    /// Logique d'interaction pour WaypointsWindow.xaml
+    /// Logique d'interaction pour PropertiesWindow.xaml
     /// </summary>
-    public partial class WaypointsWindow : ReactiveWindow<WaypointsWindowViewModel>
+    public partial class PropertiesWindow : Window
     {
-        public WaypointsWindow()
+        public PropertiesWindow()
         {
             InitializeComponent();
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        IDisposable disposable;
+
+        public void SetDisposable(IDisposable disposable)
         {
-            Hyperlink link = (Hyperlink)e.OriginalSource;
-            Process.Start(link.NavigateUri.AbsoluteUri);
+            this.disposable = disposable;
+        }
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            disposable?.Dispose();
         }
     }
 }

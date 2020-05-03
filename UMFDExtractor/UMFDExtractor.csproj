@@ -125,7 +125,10 @@
     <Compile Include="Converters\InverseConverter.cs" />
     <Compile Include="Converters\TimeSpanConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
-    <Compile Include="EHSIWindow.xaml.cs">
+    <Compile Include="Models\DummyClient.cs" />
+    <Compile Include="Models\ProviderState.cs" />
+    <Compile Include="Models\ReactiveObjectBase.cs" />
+    <Compile Include="Windows\EHSIWindow.xaml.cs">
       <DependentUpon>EHSIWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
@@ -144,26 +147,27 @@
     <Compile Include="Models\Waypoint.cs" />
     <Compile Include="Models\WaypointType.cs" />
     <Compile Include="Models\XPlane\XPlaneClient.cs" />
-    <Compile Include="KSPValuesWindow.xaml.cs">
+    <Compile Include="Windows\KSPValuesWindow.xaml.cs">
       <DependentUpon>KSPValuesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesWindow.xaml.cs">
+    <Compile Include="Windows\PropertiesWindow.xaml.cs">
       <DependentUpon>PropertiesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\EHSIWindowViewModel.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Models\KSP\KSPValues.cs" />
     <Compile Include="ViewModels\KSPValuesWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\WaypointsWindowViewModel.cs" />
-    <Compile Include="WaypointsWindow.xaml.cs">
+    <Compile Include="Windows\SphereTestWindow.xaml.cs">
+      <DependentUpon>SphereTestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WaypointsWindow.xaml.cs">
       <DependentUpon>WaypointsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\EHSI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EHSIWindow.xaml">
+    <Page Include="Windows\EHSIWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,7 +183,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PropertiesWindow.xaml">
+    <Page Include="Windows\PropertiesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,11 +191,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="KSPValuesWindow.xaml">
+    <Page Include="Windows\KSPValuesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WaypointsWindow.xaml">
+    <Page Include="Windows\SphereTestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WaypointsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +222,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Assets\hsicompass.pdn" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -238,5 +247,6 @@
   <ItemGroup>
     <Resource Include="Assets\hsicompass.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace UMFDExtractor.Models
 {
-    public class Waypoint : ReactiveObject
+    public class Waypoint : ReactiveObjectBase
     {
         public Waypoint() { }
         public Waypoint(WaypointType type, string name, double latitude, double longitude, double altitude, double? bearing = null, string region = null, string airport = null)

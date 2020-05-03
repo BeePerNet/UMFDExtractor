@@ -1,4 +1,4 @@
-﻿<reactiveui:ReactiveWindow x:Class="UMFDExtractor.KSPValuesWindow"
+﻿<reactiveui:ReactiveWindow x:Class="UMFDExtractor.Windows.KSPValuesWindow"
                            x:TypeArguments="vm:KSPValuesWindowViewModel"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

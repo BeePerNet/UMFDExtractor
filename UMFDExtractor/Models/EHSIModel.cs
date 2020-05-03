@@ -1,13 +1,23 @@
 ﻿using ReactiveUI;
 using System;
+using System.ComponentModel;
 
 namespace UMFDExtractor.Models
 {
-    public class EHSIModel : ReactiveObject
+    public class EHSIModel : ReactiveObjectBase
     {
         public EHSIModel() : base() { }
 
+        bool running = false;
+        [Category("Status")]
+        public bool Running
+        {
+            get => running;
+            set => this.RaiseAndSetIfChanged(ref running, value);
+        }
+
         double bodyRadius = 6378100;
+        [Category("Data")]
         public double BodyRadius
         {
             get => bodyRadius;
@@ -16,6 +26,7 @@ namespace UMFDExtractor.Models
 
 
         double distance;
+        [Category("Data")]
         public double Distance
         {
             get => distance;
@@ -23,6 +34,7 @@ namespace UMFDExtractor.Models
         }
 
         double heading;
+        [Category("Data")]
         public double Heading
         {
             get => heading;
@@ -30,6 +42,7 @@ namespace UMFDExtractor.Models
         }
 
         float flightHeading = 0;
+        [Category("Data")]
         public float FlightHeading
         {
             get => flightHeading;
@@ -37,6 +50,7 @@ namespace UMFDExtractor.Models
         }
 
         double course;
+        [Category("Data")]
         public double Course
         {
             get => course;
@@ -44,6 +58,7 @@ namespace UMFDExtractor.Models
         }
 
         double bearing;
+        [Category("Data")]
         public double Bearing
         {
             get => bearing;
@@ -52,6 +67,7 @@ namespace UMFDExtractor.Models
 
 
         bool isEnabled = true;
+        [Category("Data")]
         public bool IsEnabled
         {
             get => isEnabled;
@@ -60,6 +76,7 @@ namespace UMFDExtractor.Models
 
 
         bool workingWaypoint;
+        [Category("Data")]
         public bool WorkingWaypoint
         {
             get => workingWaypoint;
@@ -67,6 +84,7 @@ namespace UMFDExtractor.Models
         }
 
         double courseDeviation;
+        [Category("Data")]
         public double CourseDeviation
         {
             get => courseDeviation;
@@ -74,6 +92,7 @@ namespace UMFDExtractor.Models
         }
 
         double courseDeviationLog;
+        [Category("Data")]
         public double CourseDeviationLog
         {
             get => courseDeviationLog;
@@ -81,6 +100,7 @@ namespace UMFDExtractor.Models
         }
 
         double waypointLatitude;
+        [Category("Data")]
         public double WaypointLatitude
         {
             get => waypointLatitude;
@@ -88,6 +108,7 @@ namespace UMFDExtractor.Models
         }
 
         double waypointLongitude;
+        [Category("Data")]
         public double WaypointLongitude
         {
             get => waypointLongitude;
@@ -95,6 +116,7 @@ namespace UMFDExtractor.Models
         }
 
         double waypointMeanAltitude;
+        [Category("Data")]
         public double WaypointMeanAltitude
         {
             get => waypointMeanAltitude;
@@ -102,6 +124,7 @@ namespace UMFDExtractor.Models
         }
 
         double latitude;
+        [Category("Data")]
         public double Latitude
         {
             get => latitude;
@@ -109,6 +132,7 @@ namespace UMFDExtractor.Models
         }
 
         double longitude;
+        [Category("Data")]
         public double Longitude
         {
             get => longitude;
@@ -116,6 +140,7 @@ namespace UMFDExtractor.Models
         }
 
         double meanAltitude;
+        [Category("Data")]
         public double MeanAltitude
         {
             get => meanAltitude;

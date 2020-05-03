@@ -86,7 +86,7 @@ namespace UMFDExtractor.Models.KSP
                         Client.Status = ex.Message;
                     }
                 }
-            });
+            }, RxApp.TaskpoolScheduler);
         }
 
         void Stop()

@@ -1,4 +1,5 @@
 ﻿using DynamicData;
+using DynamicData.Binding;
 using KRPC.Client;
 using KRPC.Client.Services.KRPC;
 using KRPC.Client.Services.SpaceCenter;
@@ -14,20 +15,10 @@ namespace UMFDExtractor.Models.KSP
     public partial class KSPClient : ClientBase
     {
 
-        KSPValues kSPValues;
-
-        [ExpandableObject]
-        [Category("Values")]
-        public KSPValues KSPValues
-        {
-            get => kSPValues;
-            private set => this.RaiseAndSetIfChanged(ref kSPValues, value);
-        }
-
         [ExpandableObject]
         public KSPClient()
         {
-            kSPValues = new KSPValues(this);
+            Waypoints.ToObservableChangeSet().Filter(T => T.Region == this.CelestialBody.Name).Bind(out filteredWaypoints).Subscribe();
         }
 
 
@@ -167,11 +158,8 @@ namespace UMFDExtractor.Models.KSP
                 Observable.Start(() =>
                 {
                     Waypoints.Clear();
-                    Waypoints.AddRange(spaceCenter.WaypointManager.Waypoints.Where(T => T.Name != vesselName)
-                        .Select(x => new Waypoint(WaypointType.Waypoint, x.Name, x.Latitude, x.Longitude, x.MeanAltitude, null, bodyName, x.Icon)));
-
-                    FilteredWaypoints.Clear();
-                    FilteredWaypoints.AddRange(Waypoints.Where(T => T.Region == bodyName));
+                    Waypoints.AddRange(spaceCenter.WaypointManager.Waypoints.Select(x => 
+                        new Waypoint(WaypointType.Waypoint, x.Name, x.Latitude, x.Longitude, x.MeanAltitude, null, bodyName, x.Icon)));
                 }, RxApp.MainThreadScheduler);
             }
             else
@@ -185,7 +173,8 @@ namespace UMFDExtractor.Models.KSP
         {
             try
             {
-                Status = "Stopping";
+                starting = false;
+                //Status = "Stopping";
 
                 InternalStop();
                 GameScene = null;

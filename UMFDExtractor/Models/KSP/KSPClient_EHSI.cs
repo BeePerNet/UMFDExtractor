@@ -4,6 +4,7 @@ using ReactiveUI;
 using System;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace UMFDExtractor.Models.KSP
@@ -32,46 +33,49 @@ namespace UMFDExtractor.Models.KSP
             {
                 try
                 {
-                    runningSubscription = this.WhenAnyValue(x => x.Running).Subscribe(x =>
+                    if (runningSubscription == null)
                     {
-                        if (x)
-                            this.InternalStartEHSI();
-                        else
-                            this.InternalStopEHSI();
-                    });
-
-                    gameSceneSubscription = this.WhenAnyValue(x => x.GameScene).Subscribe(x =>
-                    {
-                        if (x == KRPC.Client.Services.KRPC.GameScene.Flight)
-                            this.InternalStartEHSI();
-                        else
-                            this.InternalStopEHSI();
-                    });
-
-                    vesselSubscription = this.WhenAnyValue(x => x.Vessel).Subscribe(x =>
-                    {
-                        this.InternalStopEHSI();
-                        if (x != null)
-                            this.InternalStartEHSI();
-                    });
-
-                    bodySubscription = this.WhenAnyValue(x => x.CelestialBody).Subscribe(x => EHSI.BodyRadius = x?.EquatorialRadius ?? 0);
-
-                    waypointSubscription = this.WhenAnyValue(x => x.Waypoint).Subscribe(x =>
-                    {
-                        EHSI.WorkingWaypoint = Waypoint != null && Vessel != null;
-                        if (EHSI.WorkingWaypoint)
+                        runningSubscription = this.WhenAnyValue(x => x.Running).Subscribe(x =>
                         {
-                            EHSI.WaypointLatitude = x.Latitude;
-                            EHSI.WaypointLongitude = x.Longitude;
-                            EHSI.WaypointMeanAltitude = x.Altitude;
+                            if (x)
+                                this.InternalStartEHSI();
+                            else
+                                this.InternalStopEHSI();
+                        });
 
-                            if (x.Bearing.HasValue)
-                                EHSI.Bearing = x.Bearing.Value;
-                        }
-                        else
-                            EHSI.Distance = 0;
-                    });
+                        gameSceneSubscription = this.ObservableForProperty(x => x.GameScene, false, true).Subscribe(x =>
+                        {
+                            if (x.Value.HasValue && x.Value.Value == KRPC.Client.Services.KRPC.GameScene.Flight)
+                                this.InternalStartEHSI();
+                            else
+                                this.InternalStopEHSI();
+                        });
+
+                        vesselSubscription = this.ObservableForProperty(x => x.Vessel, false, true).Subscribe(x =>
+                        {
+                            this.InternalStopEHSI();
+                            if (x != null)
+                                this.InternalStartEHSI();
+                        });
+
+                        bodySubscription = this.WhenAnyValue(x => x.CelestialBody).Subscribe(x => EHSI.BodyRadius = x?.EquatorialRadius ?? 0);
+
+                        waypointSubscription = this.WhenAnyValue(x => x.Waypoint).Subscribe(x =>
+                        {
+                            EHSI.WorkingWaypoint = Waypoint != null && Vessel != null;
+                            if (EHSI.WorkingWaypoint)
+                            {
+                                EHSI.WaypointLatitude = x.Latitude;
+                                EHSI.WaypointLongitude = x.Longitude;
+                                EHSI.WaypointMeanAltitude = x.Altitude;
+
+                                if (x.Bearing.HasValue)
+                                    EHSI.Bearing = x.Bearing.Value;
+                            }
+                            else
+                                EHSI.Distance = 0;
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -80,47 +84,56 @@ namespace UMFDExtractor.Models.KSP
             });
         }
 
+        bool startingEhsi = false;
+
         void InternalStartEHSI()
         {
-            if (Running && GameScene == KRPC.Client.Services.KRPC.GameScene.Flight && Vessel != null)
+            if (!startingEhsi && !EHSI.Running && Running && GameScene == KRPC.Client.Services.KRPC.GameScene.Flight && Vessel != null)
             {
-                try
+                startingEhsi = true;
+                Task task = Task.Factory.StartNew(() =>
                 {
-                    var flight = Vessel.Flight(Vessel.SurfaceReferenceFrame);
-
-                    flightstream = Connection.AddStream(() => flight.Heading);
-                    flightstream.AddCallback((float h) => EHSI.FlightHeading = h);
-                    flightstream.Start();
-
-                    longitudestream = Connection.AddStream(() => flight.Longitude);
-                    longitudestream.AddCallback((double l) => EHSI.Longitude = l);
-                    longitudestream.Start();
-
-                    altitudestream = Connection.AddStream(() => flight.MeanAltitude);
-                    altitudestream.AddCallback((double a) => EHSI.MeanAltitude = a);
-                    altitudestream.Start();
-
-                    latitudestream = Connection.AddStream(() => flight.Latitude);
-                    latitudestream.AddCallback((double l) =>
+                    try
                     {
-                        EHSI.Latitude = l;
-                        try
-                        {
-                            EHSI.CalculateWaypoint();
-                        }
-                        catch (Exception ex)
-                        {
-                            Status = ex.Message;
-                        }
-                    });
-                    latitudestream.Start();
-                }
-                catch (Exception ex)
-                {
-                    Status = ex.Message;
-                }
-            }
+                        var flight = Vessel.Flight(Vessel.SurfaceReferenceFrame);
 
+                        flightstream = Connection.AddStream(() => flight.Heading);
+                        flightstream.AddCallback((float h) => EHSI.FlightHeading = h);
+                        flightstream.Start(false);
+
+                        longitudestream = Connection.AddStream(() => flight.Longitude);
+                        longitudestream.AddCallback((double l) => EHSI.Longitude = l);
+                        longitudestream.Start(false);
+
+                        altitudestream = Connection.AddStream(() => flight.MeanAltitude);
+                        altitudestream.AddCallback((double a) => EHSI.MeanAltitude = a);
+                        altitudestream.Start(false);
+
+                        latitudestream = Connection.AddStream(() => flight.Latitude);
+                        latitudestream.AddCallback((double l) =>
+                        {
+                            EHSI.Latitude = l;
+                            try
+                            {
+                                EHSI.CalculateWaypoint();
+                            }
+                            catch (Exception ex)
+                            {
+                                Status = ex.Message;
+                            }
+                        });
+                        latitudestream.Start();
+                        EHSI.Running = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Status = ex.Message;
+                    }
+                    startingEhsi = false;
+                });
+                if (!task.Wait(10000))
+                    task.GetAwaiter();
+            }
         }
 
         void InternalStopEHSI()
@@ -131,13 +144,15 @@ namespace UMFDExtractor.Models.KSP
             vesselstream = null;
             gamesceenstream?.Remove();
             gamesceenstream = null;
+
+            EHSI.Running = false;
         }
 
         public void StopEHSI()
         {
             try
             {
-                InternalStartEHSI();
+                InternalStopEHSI();
 
                 runningSubscription?.Dispose();
                 gameSceneSubscription?.Dispose();

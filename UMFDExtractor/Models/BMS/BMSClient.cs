@@ -1,4 +1,6 @@
-﻿using F4SharedMem;
+﻿using DynamicData;
+using DynamicData.Binding;
+using F4SharedMem;
 using F4SharedMem.Headers;
 using ReactiveUI;
 using System;
@@ -36,6 +38,7 @@ namespace UMFDExtractor.Models.BMS
             if (!run)
             {
                 run = true;
+                CanStart = false;
                 Observable.Start(() =>
                 {
                     try
@@ -83,10 +86,10 @@ namespace UMFDExtractor.Models.BMS
 
 
 
-
                 run = false;
                 loaded = false;
                 Running = false;
+                CanStart = true;
             }
             catch (Exception ex)
             {
@@ -125,11 +128,9 @@ namespace UMFDExtractor.Models.BMS
             Observable.Start(() =>
             {
                 Waypoints.Clear();
-                FilteredWaypoints.Clear();
                 if (waypoints.Count > 0)
                 {
                     Waypoints.AddRange(waypoints);
-                    FilteredWaypoints.AddRange(waypoints);
                 }
             }, RxApp.MainThreadScheduler);
         }

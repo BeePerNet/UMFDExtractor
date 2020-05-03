@@ -3,12 +3,14 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using UMFDExtractor.Windows;
 
 namespace UMFDExtractor.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         public ReadOnlyDictionary<string, Type> Clients { get; }
 
@@ -33,39 +35,44 @@ namespace UMFDExtractor.ViewModels
             set => this.RaiseAndSetIfChanged(ref selectedClient, value);
         }
 
-        public MainWindowViewModel(bool designtime) : base()
+        public MainViewModel(bool designtime) : base()
         {
             Dictionary<string, Type> clients = new Dictionary<string, Type>();
+            clients.Add("Dummy", typeof(Models.DummyClient));
             clients.Add("X-Plane", typeof(Models.XPlane.XPlaneClient));
             clients.Add("Kerbal Space Program", typeof(Models.KSP.KSPClient));
             clients.Add("Falcon BMS", typeof(Models.BMS.BMSClient));
             Clients = new ReadOnlyDictionary<string, Type>(clients);
 
-            OpenKSPValuesWindowCommand = ReactiveCommand.Create(OpenKSPValuesWindow);
-            OpenEHSIWindowCommand = ReactiveCommand.Create(OpenEHSIWindow);
-            OpenWaypointsWindowCommand = ReactiveCommand.Create(OpenWaypointsWindow);
+            SelectedClient = clients.First().Value;
+
+            OpenKSPValuesWindowCommand = ReactiveCommand.Create(OpenKSPValuesWindow, this.WhenAnyValue(x => x.Client).Select(x => x is Models.KSP.KSPClient).ObserveOnDispatcher());
+            OpenEHSIWindowCommand = ReactiveCommand.Create(OpenEHSIWindow, this.WhenAnyValue(x => x.Client).Select(x => x is IEHSIProvider).ObserveOnDispatcher());
+            OpenWaypointsWindowCommand = ReactiveCommand.Create(OpenWaypointsWindow, this.WhenAnyValue(x => x.Client).Select(x => x != null).ObserveOnDispatcher());
+            OpenPropertiesWindowCommand = ReactiveCommand.Create(OpenPropertiesWindow, this.WhenAnyValue(x => x.Client).Select(x => x != null).ObserveOnDispatcher());
 
 
             if (designtime)
-                Client = new Models.XPlane.XPlaneClient();
+            {
+                Client = new DummyClient();
+            }
             else
                 this.WhenAnyValue(x => x.SelectedClient).Subscribe(SelectedClientChanged);
         }
 
-        public MainWindowViewModel() : this(true)
+        public MainViewModel() : this(true)
         {
         }
 
         void SelectedClientChanged(Type c)
         {
+            Client?.Dispose();
+
             if (c != null && (Client == null || !Client.Running))
             {
                 Client = (ClientBase)Activator.CreateInstance(c);
 
                 (Client as ILoadable)?.Load();
-
-                if (ehsiWindow != null)
-                    (ehsiWindow.DataContext as EHSIWindowViewModel).SetClient(Client as IEHSIProvider);
             }
         }
 
@@ -86,8 +93,7 @@ namespace UMFDExtractor.ViewModels
         {
             if (ehsiWindow == null || !ehsiWindow.IsActive)
             {
-                ehsiWindow = new EHSIWindow();
-                ehsiWindow.DataContext = new EHSIWindowViewModel(Client as IEHSIProvider);
+                ehsiWindow = new EHSIWindow(this);
                 ehsiWindow.Show();
             }
         }
@@ -97,19 +103,25 @@ namespace UMFDExtractor.ViewModels
         {
             if (waypointsWindow == null || !waypointsWindow.IsActive)
             {
-                waypointsWindow = new WaypointsWindow();
-                waypointsWindow.DataContext = new WaypointsWindowViewModel(Client);
+                waypointsWindow = new WaypointsWindow(this);
                 waypointsWindow.Show();
             }
         }
 
-        public void Close()
-        {
-            kspValuesWindow?.Close();
-            ehsiWindow?.Close();
-            waypointsWindow?.Close();
+        public ReactiveCommand<Unit, Unit> OpenPropertiesWindowCommand { get; }
 
-            Client?.Dispose();
+        PropertiesWindow propertiesWindow;
+        void OpenPropertiesWindow()
+        {
+            if (propertiesWindow == null || !propertiesWindow.IsActive)
+            {
+                propertiesWindow = new PropertiesWindow();
+                propertiesWindow.SetDisposable(this.WhenAnyValue(x => x.Client).Subscribe(x => propertiesWindow.DataContext = x));
+                propertiesWindow.Show();
+            }
         }
+
+
+
     }
 }

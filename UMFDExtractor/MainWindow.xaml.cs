@@ -1,36 +1,33 @@
 ﻿using UMFDExtractor.ViewModels;
 using ReactiveUI;
 using System.ComponentModel;
+using System.Windows;
+using UMFDExtractor.Windows;
 
 namespace UMFDExtractor
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
+    public partial class MainWindow : ReactiveWindow<MainViewModel>
     {
         public MainWindow()
         {
             InitializeComponent();
 
-            this.DataContext = new MainWindowViewModel(false);
+            this.DataContext = new MainViewModel(false);
         }
 
         private void ReactiveWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            (this.DataContext as MainWindowViewModel)?.Close();
-            propertiesWindow?.Close();
-        }
-
-        PropertiesWindow propertiesWindow;
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (propertiesWindow == null || !propertiesWindow.IsActive)
+            foreach (Window window in System.Windows.Application.Current.Windows)
             {
-                propertiesWindow = new PropertiesWindow();
-                propertiesWindow.DataContext = (this.DataContext as MainWindowViewModel).Client;
-                propertiesWindow.Show();
+                if (window != this)
+                {
+                    window.Close();
+                }
             }
         }
+
     }
 }

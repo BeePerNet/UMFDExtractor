@@ -1,5 +1,4 @@
-﻿using ReactiveUI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace UMFDExtractor
+namespace UMFDExtractor.Windows
 {
     /// <summary>
-    /// Logique d'interaction pour PropertiesWindow.xaml
+    /// Logique d'interaction pour SphereTestWindow.xaml
     /// </summary>
-    public partial class PropertiesWindow : Window
+    public partial class SphereTestWindow : Window
     {
-        public PropertiesWindow()
+        public SphereTestWindow()
         {
             InitializeComponent();
         }

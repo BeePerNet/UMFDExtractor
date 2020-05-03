@@ -11,7 +11,6 @@ using System.Reactive.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using UMFDExtractor.Models;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace UMFDExtractor.Models.XPlane
@@ -42,6 +41,7 @@ namespace UMFDExtractor.Models.XPlane
 
                     Running = true;
                     Status = "Running";
+                    CanStart = false;
                 }
                 catch (Exception ex)
                 {
@@ -94,7 +94,7 @@ namespace UMFDExtractor.Models.XPlane
                 {
                     Status = ex.Message;
                 }
-            });
+            }, RxApp.TaskpoolScheduler);
         }
 
         void InternalStopEHSI()
@@ -103,6 +103,8 @@ namespace UMFDExtractor.Models.XPlane
             {
                 byte[] packet = Encoding.ASCII.GetBytes(string.Format("RPOS{0}0{0}", (char)0));
                 sendclient.Send(packet, packet.Length);
+
+                EHSI.Running = false;
             }
         }
         void InternalStartEHSI()
@@ -111,6 +113,8 @@ namespace UMFDExtractor.Models.XPlane
             {
                 byte[] packet = Encoding.ASCII.GetBytes(string.Format("RPOS{0}60{0}", (char)0));
                 sendclient.Send(packet, packet.Length);
+
+                EHSI.Running = true;
             }
             catch (Exception ex)
             {
@@ -148,7 +152,10 @@ namespace UMFDExtractor.Models.XPlane
                 RPOS rpos = ByteArrayToStructure<RPOS>(buffer);
                 EHSI.FlightHeading = rpos.veh_psi_loc;
                 EHSI.Latitude = rpos.dat_lat;
-                EHSI.Longitude = rpos.dat_ele;
+                EHSI.Longitude = rpos.dat_lon;
+                EHSI.MeanAltitude = rpos.dat_ele;
+
+                EHSI.CalculateWaypoint();
             }
         }
 
@@ -212,6 +219,7 @@ namespace UMFDExtractor.Models.XPlane
                 InternalStop();
 
                 Status = "Stopped";
+                CanStart = true;
             }
             catch (Exception ex)
             {
@@ -245,8 +253,8 @@ namespace UMFDExtractor.Models.XPlane
                     IEnumerable<Waypoint> fixes = null;
                     IEnumerable<Waypoint> navs = null;
 
-                    var fixresult = Task.Run(() => fixes = LoadFixes());
-                    var navresult = Task.Run(() => navs = LoadNavs());
+                    Task<IEnumerable<Waypoint>> fixresult = Task.Run(() => fixes = LoadFixes());
+                    Task<IEnumerable<Waypoint>> navresult = Task.Run(() => navs = LoadNavs());
 
                     Task.WaitAll(fixresult, navresult);
 
@@ -263,7 +271,7 @@ namespace UMFDExtractor.Models.XPlane
                 {
                     Status = ex.Message;
                 }
-            });
+            }, RxApp.TaskpoolScheduler);
 
         }
 
