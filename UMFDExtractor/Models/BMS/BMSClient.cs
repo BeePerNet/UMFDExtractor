@@ -1,6 +1,4 @@
-﻿using DynamicData;
-using DynamicData.Binding;
-using F4SharedMem;
+﻿using F4SharedMem;
 using F4SharedMem.Headers;
 using ReactiveUI;
 using System;
@@ -9,9 +7,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace UMFDExtractor.Models.BMS

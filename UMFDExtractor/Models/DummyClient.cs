@@ -1,11 +1,7 @@
-﻿using DynamicData;
-using DynamicData.Binding;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace UMFDExtractor.Models
 {
@@ -21,9 +17,19 @@ namespace UMFDExtractor.Models
             filteredWaypoints = new ReadOnlyObservableCollection<Waypoint>(Waypoints);
 
             Waypoint = Waypoints.First();
+
+
+            EHSI.PropertyChanged += EHSI_PropertyChanged;
         }
 
-        public EHSIModel EHSI => new EHSIModel();
+        private void EHSI_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            EHSI.CalculateWaypoint();
+        }
+
+        [Category("Values")]
+        [ExpandableObject]
+        public EHSIModel EHSI { get; } = new EHSIModel();
 
         public void StartEHSI()
         {
