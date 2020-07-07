@@ -1,10 +1,7 @@
-﻿using DynamicData;
-using DynamicData.Binding;
+﻿using DynamicData.Binding;
 using ReactiveUI;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Reactive;
 using System.Reactive.Linq;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;

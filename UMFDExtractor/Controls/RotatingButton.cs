@@ -228,6 +228,14 @@ namespace UMFDExtractor.Controls
         }
 
         /// <summary>
+        /// This method is called when button is clicked via IInvokeProvider.
+        /// </summary>
+        internal void AutomationButtonBaseClick()
+        {
+            OnClick();
+        }
+
+        /// <summary>
         /// Raises InvokedAutomationEvent and call the base method to raise the Click event
         /// </summary>
         /// <ExternalAPI/>
@@ -240,10 +248,10 @@ namespace UMFDExtractor.Controls
                     peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
-            base.OnClick();
-
             if (IsEnabled)
             {
+                base.OnClick();
+
                 double rotation = Rotation;
                 double step = 1;
                 if (Keyboard.Modifiers == ModifierKeys.Control)

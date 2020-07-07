@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using ReactiveUI;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
@@ -7,6 +9,8 @@ namespace UMFDExtractor.Models
 {
     public class DummyClient : ClientBase, IEHSIProvider
     {
+        IDisposable waypointSubscription;
+
         public DummyClient()
         {
             CanStart = false;
@@ -16,11 +20,28 @@ namespace UMFDExtractor.Models
 
             filteredWaypoints = new ReadOnlyObservableCollection<Waypoint>(Waypoints);
 
-            Waypoint = Waypoints.First();
+            waypointSubscription = this.WhenAnyValue(x => x.Waypoint).Subscribe(x =>
+            {
+                EHSI.WorkingWaypoint = Waypoint != null;
+                if (EHSI.WorkingWaypoint)
+                {
+                    EHSI.WaypointLatitude = x.Latitude;
+                    EHSI.WaypointLongitude = x.Longitude;
+                    EHSI.WaypointMeanAltitude = x.Altitude;
 
+                    if (x.Bearing.HasValue)
+                        EHSI.Bearing = x.Bearing.Value;
+                }
+                else
+                    EHSI.Distance = 0;
+            });
+
+            Waypoint = Waypoints.First();
 
             EHSI.PropertyChanged += EHSI_PropertyChanged;
         }
+
+
 
         private void EHSI_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

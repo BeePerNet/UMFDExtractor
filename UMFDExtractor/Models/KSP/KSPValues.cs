@@ -1,10 +1,9 @@
 ﻿using KRPC.Client.Services.KRPC;
-using UMFDExtractor.Models.KSP;
 using ReactiveUI;
 using System;
+using System.ComponentModel;
 using System.Reactive.Linq;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
-using System.ComponentModel;
 
 namespace UMFDExtractor.Models.KSP
 {
