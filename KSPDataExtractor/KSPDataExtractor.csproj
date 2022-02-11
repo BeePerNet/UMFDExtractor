@@ -31,7 +31,7 @@
     <PackageReference Include="Avalonia" Version="0.9.4" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.4" />
-    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
+    <PackageReference Include="Google.Protobuf" Version="3.15.0" />
     <PackageReference Include="KRPC.Client" Version="0.4.8" />
   </ItemGroup>
   <ItemGroup>
